@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from item.models import Category, Item
 from .forms import SignupForm
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 
@@ -16,6 +17,8 @@ def contact(request):
     return render(request, 'core/contact.html')
 
 def signup(request):
+    form = SignupForm()
+    
     if request.method == 'POST':
         form = SignupForm(request.POST)
 
@@ -29,3 +32,4 @@ def signup(request):
     return render(request, 'core/signup.html', {
         'form': form
     })
+
