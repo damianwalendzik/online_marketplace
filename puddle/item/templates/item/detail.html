@@ -16,43 +16,46 @@
                 <strong class="text-gray-500">Description:</strong><br>
                 {{ item.description }}
             </p>
-            {% endif %}
+        {% endif %}
 
         {% if request.user == item.created_by %}
-        <div class="mt-6 p-6 bg-white rounded-xl">
-            <p>This is your item!</p>
-            <a href="#" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
-            <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
-        
+            <div class="mt-6 p-6 bg-white rounded-xl">
+                <p>This is your item!</p>
+                <a href="{% url 'item:edit' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
+                <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
+            </div>
         {% else %}
             <a href="#" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">
-            Contact seller
+                Contact seller
             </a>
         {% endif %}
-        </div>
     </div>
 </div>
 <div class="mt-6 px-6 py-12 bg-grey-100 rounded-xl">
     <h2 class="mb-12 text-2xl text-center">Related Items</h2>
 
     <div class="grid grid-cols-3 gap-3">
-        {% for item in related_items %}
-        <div>
-            <a href="{% url 'item:detail' item.id %}">
-                <div>
-                    <img src="{{ item.image.url }}" class="rounded-t-xl">
-                </div>
-                <div class="p-6 bg-white rounded-b-xl">
-                    <h2 class="text-2xl">
-                        {{ item.name }}
-                    </h2>
-                    <p class="text-gray-500">
-                        Price: {{ item.price }}
-                    </p>
-                </div>
-            </a>
-        </div>
+        {% for related_item in related_items %}
+            <div>
+                <a href="{% url 'item:detail' related_item.id %}">
+                    <div>
+                        <img src="{{ related_item.image.url }}" class="rounded-t-xl">
+                    </div>
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="text-2xl">
+                            {{ related_item.name }}
+                        </h2>
+                        <p class="text-gray-500">
+                            Price: {{ related_item.price }}
+                        </p>
+                    </div>
+                </a>
+            </div>
         {% endfor %}
     </div>
 </div>
+
+{# Add a link to the edit form page #}
+<a href="{% url 'item:edit' item.id %}">Edit Item</a>
+
 {% endblock %}
